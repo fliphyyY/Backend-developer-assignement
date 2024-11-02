@@ -19,8 +19,8 @@ namespace Alza.Controllers
         [HttpGet("getProducts")]
         public async Task<JsonResult> Get()
         {
-            await Task.Delay(1);
-            return new JsonResult(new object());
+            var products = await myProductContext.GetProducts();
+            return new JsonResult(products) { StatusCode = StatusCodes.Status200OK };
         }
     }
 }

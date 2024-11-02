@@ -1,4 +1,6 @@
+using Application.CollectionGateways;
 using Application.ProductContext;
+using Domain.ICollectionGateway;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -14,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductContext, ProductContext>();
+builder.Services.AddScoped<IProductCollectionGateway, ProductCollectionGateway>();
 
 var app = builder.Build();
 
