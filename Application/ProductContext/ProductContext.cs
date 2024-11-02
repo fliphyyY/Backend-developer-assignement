@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.ICollectionGateway;
+﻿using Domain.ICollectionGateway;
 using Domain.Models;
 
 namespace Application.ProductContext
@@ -19,6 +14,11 @@ namespace Application.ProductContext
         public async Task<List<Product>> GetProducts()
         {
             return await myProductCollectionGateway.FetchProducts();
+        }
+
+        public async Task<List<Product>> GetProductsPagination(int pageSize, int pageNumber)
+        {
+            return await myProductCollectionGateway.FetchProductsPagination(pageSize, pageNumber);
         }
     }
 }

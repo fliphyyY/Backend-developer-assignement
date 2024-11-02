@@ -3,7 +3,6 @@ using Application.ProductContext;
 using Domain.ICollectionGateway;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
