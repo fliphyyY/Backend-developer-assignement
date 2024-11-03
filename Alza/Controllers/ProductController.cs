@@ -1,10 +1,14 @@
 using Application.ProductContext;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alza.Controllers
 {
     [ApiController]
+    [ApiVersion(1.0)]
+    [ApiVersion(2.0)]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ProductController : ControllerBase
     {
 
@@ -15,7 +19,7 @@ namespace Alza.Controllers
             myProductContext = productContext;
         }
 
-        [AllowAnonymous]
+        [MapToApiVersion(1.0)]
         [HttpGet("getProducts")]
         public async Task<JsonResult> GetProducts()
         {
@@ -23,7 +27,7 @@ namespace Alza.Controllers
             return new JsonResult(products) { StatusCode = StatusCodes.Status200OK };
         }
 
-        [AllowAnonymous]
+        [MapToApiVersion(2.0)]
         [HttpGet("getProductsPagination")]
         public async Task<JsonResult> GetProductsPagination(int pageSize, int pageNumber)
         {

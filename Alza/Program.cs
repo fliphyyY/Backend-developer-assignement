@@ -1,8 +1,12 @@
+using Alza.Swagger;
 using Application.CollectionGateways;
 using Application.ProductContext;
+using Asp.Versioning;
 using Domain.ICollectionGateway;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +16,28 @@ var connectionString = builder.Configuration.GetValue<string>("ConnectionStrings
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.OperationFilter<SwaggerDefaultValues>();
+});
 builder.Services.AddScoped<IProductContext, ProductContext>();
 builder.Services.AddScoped<IProductCollectionGateway, ProductCollectionGateway>();
+
+builder.Services.AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1.0);
+        options.ReportApiVersions = true;
+        options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    })
+    .AddApiExplorer(options =>
+    {
+        options.SubstituteApiVersionInUrl = true;
+        options.GroupNameFormat = "'v'VVV";
+        options.AssumeDefaultVersionWhenUnspecified = true;
+    });
 
 var app = builder.Build();
 
@@ -35,7 +57,18 @@ if (app.Environment.IsDevelopment())
 
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        var descriptions = app.DescribeApiVersions();
+
+        foreach (var description in descriptions)
+        {
+            var url = $"/swagger/{description.GroupName}/swagger.json";
+            var name = description.GroupName;
+            options.SwaggerEndpoint(url, name);
+        }
+    });
+
 }
 
 app.UseHttpsRedirection();
