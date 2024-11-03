@@ -9,5 +9,7 @@ namespace Domain.ICollectionGateway
         Task<List<Product>> FetchProductsPagination(int pageNumber, int pageSize = 10);
 
         Task<Product?> FetchProduct(int id);
+
+        Task<int> UpdateProduct(Product product);
     }
 }

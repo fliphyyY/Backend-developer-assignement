@@ -33,5 +33,14 @@ namespace Application.CollectionGateways
         {
             return await myAppDbContext.Products.FirstOrDefaultAsync(item => item.Id == id);
         }
+
+        public async Task<int> UpdateProduct(Product product)
+        {
+            myAppDbContext.Products.Attach(product);
+            myAppDbContext.Entry(product).State = EntityState.Modified;
+
+           return await myAppDbContext.SaveChangesAsync();
+
+        }
     }
 }

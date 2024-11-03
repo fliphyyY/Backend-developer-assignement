@@ -11,6 +11,8 @@ namespace Application.ProductContext
 
         Task<ResponseHandler> GetProductById(int id);
 
+        Task<ResponseHandler> UpdateProductDescription(ProductUpdateDescriptionDto productUpdateDescriptionDto);
+
 
     }
 }

@@ -45,10 +45,22 @@ namespace Alza.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType((StatusCodes.Status404NotFound))]
         [HttpGet("get" + "/{id}")]
-        public async Task<IActionResult> GetProduct(int id)
+        public async Task<JsonResult> GetProduct(int id)
         {
             var result = await myProductContext.GetProductById(id);
             return new JsonResult(result.Data) { StatusCode = (int)result.StatusCode};
+        }
+
+        [AllowAnonymous]
+        [MapToApiVersion(1.0)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType((StatusCodes.Status500InternalServerError))]
+        [HttpPatch("updateProductDescription")]
+        public async Task<IActionResult> UpdateProductDescription(ProductUpdateDescriptionDto productUpdateDescriptionDto)
+        {
+            var result = await myProductContext.UpdateProductDescription(productUpdateDescriptionDto);
+            return StatusCode((int)result.StatusCode, result.Message);
         }
     }
 }
