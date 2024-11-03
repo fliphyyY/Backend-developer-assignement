@@ -1,5 +1,6 @@
 using Application.ProductContext;
 using Asp.Versioning;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,20 +20,35 @@ namespace Alza.Controllers
             myProductContext = productContext;
         }
 
+        [AllowAnonymous]
         [MapToApiVersion(1.0)]
-        [HttpGet("getProducts")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("getAll")]
         public async Task<JsonResult> GetProducts()
         {
             var products = await myProductContext.GetProducts();
             return new JsonResult(products) { StatusCode = StatusCodes.Status200OK };
         }
 
+        [AllowAnonymous]
         [MapToApiVersion(2.0)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("getProductsPagination")]
-        public async Task<JsonResult> GetProductsPagination(int pageSize, int pageNumber)
+        public async Task<JsonResult> GetProductsPagination(int pageNumber, int pageSize = 10 )
         {
             var products = await myProductContext.GetProductsPagination(pageSize, pageNumber);
             return new JsonResult(products) { StatusCode = StatusCodes.Status200OK };
+        }
+
+        [AllowAnonymous]
+        [MapToApiVersion(1.0)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType((StatusCodes.Status404NotFound))]
+        [HttpGet("get" + "/{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var result = await myProductContext.GetProductById(id);
+            return new JsonResult(result.Data) { StatusCode = (int)result.StatusCode};
         }
     }
 }

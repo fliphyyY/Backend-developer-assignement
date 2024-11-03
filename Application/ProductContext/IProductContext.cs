@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Alza.CustomResponse;
+using Domain.Models;
 
 namespace Application.ProductContext
 {
@@ -6,6 +7,10 @@ namespace Application.ProductContext
     {
         Task<List<Product>> GetProducts();
 
-        Task<List<Product>> GetProductsPagination(int pageSize, int pageNumber);
+        Task<List<Product>> GetProductsPagination(int pageNumber, int pageSize = 10);
+
+        Task<ResponseHandler> GetProductById(int id);
+
+
     }
 }

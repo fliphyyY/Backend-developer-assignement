@@ -12,13 +12,13 @@ namespace Application.CollectionGateways
         {
             myAppDbContext = appDbContext;
         }
-        public async Task<List<Product>> FetchProducts()
+        public async Task<List<Product>> FetchAllProducts()
         {
             var products = myAppDbContext.Products;
             return await products.ToListAsync();
         }
 
-        public async Task<List<Product>> FetchProductsPagination(int pageSize, int pageNumber)
+        public async Task<List<Product>> FetchProductsPagination(int pageNumber, int pageSize = 10)
         {
             var products = await myAppDbContext.Products.AsNoTracking()
                 .OrderBy(x => x.Id)
@@ -27,6 +27,11 @@ namespace Application.CollectionGateways
                 .ToListAsync();
 
             return products;
+        }
+
+        public async Task<Product?> FetchProduct(int id)
+        {
+            return await myAppDbContext.Products.FirstOrDefaultAsync(item => item.Id == id);
         }
     }
 }
