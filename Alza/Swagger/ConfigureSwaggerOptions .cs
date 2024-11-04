@@ -22,8 +22,8 @@ namespace Alza.Swagger
         private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
         {
             var desVersionText = description.ApiVersion.ToString().Equals("1.0")
-                ? $"This is v{description.ApiVersion.ToString()} of WebAPI Application. This version contains three endpoints."
-                : $"This is v{description.ApiVersion.ToString()} of WebAPI Application. This version contains one endpoint.";
+                ? $"This is v{description.ApiVersion.ToString()} of WebAPI Application for managing products. This version contains three endpoints."
+                : $"This is v{description.ApiVersion.ToString()} of WebAPI Application for managing products. This version contains one endpoint.";
             var info = new OpenApiInfo()
             {
                 Title = $"WebApi Application v{description.ApiVersion.ToString()}",
