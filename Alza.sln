@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{B0BFD077-3B77-4C17-B68A-4FF71A7A6BB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Tests", "Alza.Tests\Alza.Tests.csproj", "{BEF38F8A-4A12-4F6C-81A6-4B6E62B6E56A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B0BFD077-3B77-4C17-B68A-4FF71A7A6BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0BFD077-3B77-4C17-B68A-4FF71A7A6BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0BFD077-3B77-4C17-B68A-4FF71A7A6BB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF38F8A-4A12-4F6C-81A6-4B6E62B6E56A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF38F8A-4A12-4F6C-81A6-4B6E62B6E56A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF38F8A-4A12-4F6C-81A6-4B6E62B6E56A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF38F8A-4A12-4F6C-81A6-4B6E62B6E56A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

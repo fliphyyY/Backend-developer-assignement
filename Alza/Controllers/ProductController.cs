@@ -35,10 +35,10 @@ namespace Alza.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("getAll")]
         [Produces("application/json")]
-        public async Task<JsonResult> GetProducts()
+        public async Task<JsonResult> GetAllProducts()
         {
             var products = await myProductContext.GetProducts();
-            return new JsonResult(products) { StatusCode = StatusCodes.Status200OK };
+            return new JsonResult(products) {StatusCode = StatusCodes.Status200OK};
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Alza.Controllers
         [Produces("application/json")]
         public async Task<JsonResult> GetProductsPagination(int pageNumber, int pageSize = 10 )
         {
-            var products = await myProductContext.GetProductsPagination(pageSize, pageNumber);
+            var products = await myProductContext.GetProductsPagination(pageNumber, pageSize);
             return new JsonResult(products) { StatusCode = StatusCodes.Status200OK };
         }
 
@@ -94,7 +94,7 @@ namespace Alza.Controllers
         /// <summary>
         /// Updates product's description.
         /// </summary>
-        /// <param name="ProductUpdateDescriptionDto">Update object with id and description.</param>
+        /// <param name="productUpdateDescriptionDto">Update object with id and description.</param>
         /// <returns>Product item.</returns>
         /// <remarks>
         /// Sample request:

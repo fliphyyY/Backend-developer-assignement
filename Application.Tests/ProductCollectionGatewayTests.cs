@@ -1,4 +1,4 @@
-﻿using Application.CollectionGateways;
+﻿ using Application.CollectionGateways;
 using Microsoft.EntityFrameworkCore;
 using Domain.Models;
 using Infrastructure.Context;

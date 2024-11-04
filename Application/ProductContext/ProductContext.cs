@@ -26,7 +26,7 @@ namespace Application.ProductContext
         {
             if (IsPaginationInputValid(pageNumber, pageSize))
             {
-                return await myProductCollectionGateway.FetchProductsPagination(pageSize, pageNumber);
+                return await myProductCollectionGateway.FetchProductsPagination(pageNumber, pageSize);
 
             }
 
