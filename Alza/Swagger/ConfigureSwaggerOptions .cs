@@ -21,12 +21,15 @@ namespace Alza.Swagger
 
         private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
         {
+            var desVersionText = description.ApiVersion.ToString().Equals("1.0")
+                ? $"This is v{description.ApiVersion.ToString()} of WebAPI Application. This version contains three endpoints."
+                : $"This is v{description.ApiVersion.ToString()} of WebAPI Application. This version contains one endpoint.";
             var info = new OpenApiInfo()
             {
-                Title = "Example Web API",
+                Title = $"WebApi Application v{description.ApiVersion.ToString()}",
                 Version = description.ApiVersion.ToString(),
-                Description = "Description for the example Web API",
-                Contact = new OpenApiContact { Name = "Author name", Email = "author-main@org.com" },
+                Description = desVersionText,
+                Contact = new OpenApiContact { Name = "MSc. Filip Ondrúšek", Email = "filip.ondrusek@gmail.com" },
                 License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
             };
 

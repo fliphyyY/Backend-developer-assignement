@@ -7,6 +7,9 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,7 @@ builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwa
 builder.Services.AddSwaggerGen(options =>
 {
     options.OperationFilter<SwaggerDefaultValues>();
+
 });
 builder.Services.AddScoped<IProductContext, ProductContext>();
 builder.Services.AddScoped<IProductCollectionGateway, ProductCollectionGateway>();
@@ -60,7 +64,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         var descriptions = app.DescribeApiVersions();
-
+        
         foreach (var description in descriptions)
         {
             var url = $"/swagger/{description.GroupName}/swagger.json";
@@ -70,6 +74,7 @@ if (app.Environment.IsDevelopment())
     });
 
 }
+
 
 app.UseHttpsRedirection();
 

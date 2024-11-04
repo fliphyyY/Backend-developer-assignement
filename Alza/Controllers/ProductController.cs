@@ -20,6 +20,10 @@ namespace Alza.Controllers
             myProductContext = productContext;
         }
 
+        /// <summary>
+        /// TEST DOCUMENTATION
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [MapToApiVersion(1.0)]
         [ProducesResponseType(StatusCodes.Status200OK)]

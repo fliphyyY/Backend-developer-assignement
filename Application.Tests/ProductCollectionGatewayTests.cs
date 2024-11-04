@@ -139,7 +139,7 @@ namespace Application.Tests
 
 
             //THEN:
-            //Correct asset count
+            //Correct asset values
             Assert.NotNull(result);
             Assert.Equal(result.Id, id);
             Assert.Equal(result.Name, assetName);
@@ -177,7 +177,7 @@ namespace Application.Tests
             var updatedResult = await collection.FetchProduct(id);
 
             //THEN:
-            //Correct asset count
+            //Correct asset values
             Assert.NotNull(updatedResult);
             Assert.Equal(updatedResult.Id, id);
             Assert.Equal(updatedResult.Name, assetName);
