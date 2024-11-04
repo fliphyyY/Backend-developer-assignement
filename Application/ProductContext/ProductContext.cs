@@ -2,7 +2,6 @@
 using Domain.ICollectionGateway;
 using Domain.Models;
 using Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace Application.ProductContext
