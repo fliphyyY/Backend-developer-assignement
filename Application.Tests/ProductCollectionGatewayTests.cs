@@ -1,4 +1,5 @@
-﻿ using Application.CollectionGateways;
+﻿ using System.ComponentModel.DataAnnotations;
+ using Application.CollectionGateways;
 using Microsoft.EntityFrameworkCore;
 using Domain.Models;
 using Infrastructure.Context;
@@ -8,17 +9,16 @@ namespace Application.Tests
 {
     public class ProductCollectionGatewayTests : IDisposable
     {
+        private AppDbContext myAppDbContext { get; }
 
-        private AppDbContext myAppDbContext;
-        private AppDbContext GetInMemoryDbContext()
+        public ProductCollectionGatewayTests()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-
             myAppDbContext = new AppDbContext(options);
-            return myAppDbContext;
         }
+
 
         [Theory]
         [InlineData(10, 5, "Product 6", "/products/product6.jpg", "Description 6")]
@@ -29,7 +29,7 @@ namespace Application.Tests
         {
             // GIVEN:
             // Get DB context
-            var appDbContext = GetInMemoryDbContext();
+            var appDbContext = myAppDbContext;
             var collection = new ProductCollectionGateway(appDbContext);
 
             // Assets are stored to database
@@ -39,7 +39,7 @@ namespace Application.Tests
             await appDbContext.SaveChangesAsync();
 
             // WHEN:
-            //Assets are get
+            //Assets are fetched
 
             var result = await collection.FetchAllProducts();
 
@@ -62,7 +62,7 @@ namespace Application.Tests
         {
             // GIVEN:
             // Get DB context
-            var appDbContext = GetInMemoryDbContext();
+            var appDbContext = myAppDbContext;
             var collection = new ProductCollectionGateway(appDbContext);
 
             // Assets are stored to database
@@ -71,7 +71,7 @@ namespace Application.Tests
             await appDbContext.SaveChangesAsync();
 
             // WHEN:
-            //Assets are get
+            //Assets are fetched
 
             var result = await collection.FetchProductsPagination(pageNumber);
 
@@ -93,7 +93,7 @@ namespace Application.Tests
         {
             // GIVEN:
             // Get DB context
-            var appDbContext = GetInMemoryDbContext();
+            var appDbContext = myAppDbContext;
             var collection = new ProductCollectionGateway(appDbContext);
 
             // Assets are stored to database
@@ -124,7 +124,7 @@ namespace Application.Tests
         {
             // GIVEN:
             // Get DB context
-            var appDbContext = GetInMemoryDbContext();
+            var appDbContext = myAppDbContext;
             var collection = new ProductCollectionGateway(appDbContext);
 
             // Assets are stored to database
@@ -133,7 +133,7 @@ namespace Application.Tests
             await appDbContext.SaveChangesAsync();
 
             // WHEN:
-            //Asset is get
+            //Asset is fetched
 
             var result = await collection.FetchProduct(id);
 
@@ -156,7 +156,7 @@ namespace Application.Tests
         {
             // GIVEN:
             // Get DB context
-            var appDbContext = GetInMemoryDbContext();
+            var appDbContext = myAppDbContext;
             var collection = new ProductCollectionGateway(appDbContext);
 
             // Assets are stored to database
@@ -165,14 +165,17 @@ namespace Application.Tests
             await appDbContext.SaveChangesAsync();
 
             // WHEN:
-            //Asset is get
+            //Asset is fetched
 
             var result = await collection.FetchProduct(id);
-            result.Name = assetName;
-            result.ImgUri = assetImgUri;
-            result.Description = assetDescription;
+            if (result != null)
+            {
+                result.Name = assetName;
+                result.ImgUri = assetImgUri;
+                result.Description = assetDescription;
 
-            await collection.UpdateProduct(result);
+                await collection.UpdateProduct(result);
+            }
 
             var updatedResult = await collection.FetchProduct(id);
 
@@ -197,7 +200,7 @@ namespace Application.Tests
                     new Product
                     {
                         Name = $"Product {i}",
-                        Price = (float)(random.NextDouble() * (1000 - 50) + 50),
+                        Price = Math.Round(new decimal(random.NextDouble() * (1000 - 50) + 50)),
                         ImgUri = $"/products/product{i}.jpg",
                         Description = i == 13 ? null : $"Description {i}"
                     }

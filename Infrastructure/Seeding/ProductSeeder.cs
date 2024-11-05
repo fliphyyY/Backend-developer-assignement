@@ -68,7 +68,7 @@ namespace Infrastructure.Seeding
             "computers/alienwareAuroraGamingPc.jpg"
         };
 
-        private static string[] description = new string[seedSize]
+        private static string?[] description = new string?[seedSize]
         {
             "High-performance Intel Core i9 processor for demanding applications.",
             "AMD Ryzen 9 processor with impressive speed and energy efficiency.",
@@ -107,7 +107,7 @@ namespace Infrastructure.Seeding
                     Id = i + 1,
                     Name = productNames[i],
                     ImgUri = imgUri[i],
-                    Price = (float)(random.NextDouble() * (1000 - 50) + 50),
+                    Price = Math.Round(new decimal(random.NextDouble() * (1000 - 50) + 50),2),
                     Description = description[i]
                 });
             }

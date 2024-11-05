@@ -42,7 +42,7 @@ namespace Alza.Tests
                     Id = 1,
                     Name = "Product1",
                     ImgUri = "/products/product1.jpg",
-                    Price = 341.23f,
+                    Price = 341.23M,
                     Description = "Lorem Ipsum"
                 },
 
@@ -68,7 +68,7 @@ namespace Alza.Tests
                     Id = 1,
                     Name = "Product1",
                     ImgUri = "/products/product1.jpg",
-                    Price = 341.23f,
+                    Price = 341.23M,
                     Description = "Lorem Ipsum"
                 },
 
@@ -91,14 +91,14 @@ namespace Alza.Tests
             {
 
                 StatusCode = HttpStatusCode.OK,
-                Message = "Update of product's description with id 1 has been successful!",
+                Message = String.Empty,
                 Succeeded = true,
                 Data = new Product()
                 {
                     Id = 1,
                     Name = "Product1",
                     ImgUri = "/products/product1.jpg",
-                    Price = 341.23f,
+                    Price = 341.23M,
                     Description = "Lorem Ipsum"
                 },
 
@@ -110,6 +110,33 @@ namespace Alza.Tests
             Assert.NotNull(jsonResult);
             Assert.Equal(StatusCodes.Status200OK, jsonResult.StatusCode);
             Assert.Equal(response.Data, jsonResult.Value);
+        }
+
+        [Fact]
+        public async void UpdateProductDescription_CorrectMethodIsCalled_OKStatusReturned()
+        {
+            var productUpdateDescriptionDto = new ProductUpdateDescriptionDto()
+            {
+                Id = 1,
+                Description = "New description for product"
+            };
+
+            var response = new ResponseHandler()
+            {
+
+                StatusCode = HttpStatusCode.OK,
+                Message = "Update of product's description with id 1 has been successful!",
+                Succeeded = true,
+            };
+
+            myProductContextMock.Setup(m => m.UpdateProductDescription(productUpdateDescriptionDto)).ReturnsAsync(response);
+            IActionResult result = await mySut.UpdateProductDescription(productUpdateDescriptionDto);
+
+            myProductContextMock.Verify(m => m.UpdateProductDescription(productUpdateDescriptionDto), Times.Once);
+            Assert.IsType<ObjectResult>(result);
+
+            Assert.Equal(StatusCodes.Status200OK, ((ObjectResult)result).StatusCode); ;
+            Assert.Equal(response.Message, ((ObjectResult)result).Value);
 
         }
     }
